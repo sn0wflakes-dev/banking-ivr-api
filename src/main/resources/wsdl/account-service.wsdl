@@ -1,0 +1,80 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch0="https://example.bank.com/AccountServices" xmlns:sch1="https://example.bank.com/Commons" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="https://example.bank.com/AccountServices" targetNamespace="https://example.bank.com/AccountServices">
+    <wsdl:types>
+        <xs:schema xmlns:account="https://example.bank.com/AccountServices" xmlns:common="https://example.bank.com/Commons" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="https://example.bank.com/AccountServices" version="1.0">
+            <xs:import namespace="https://example.bank.com/Commons"/>
+            <xs:element name="UpdateCustomerEmailRequest" type="account:updateCustomerEmailRequest"/>
+            <xs:element name="UpdateCustomerEmailResponse" type="account:updateCustomerEmailResponse"/>
+            <xs:complexType name="updateCustomerEmailRequest">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="RequestHeader" type="common:requestHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="UpdateCustomerEmailData" type="account:UpdateCustomerEmailRequestData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="UpdateCustomerEmailRequestData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="gcif" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="email" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateCustomerEmailResponse">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="ResponseHeader" type="common:responseHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="UpdateCustomerEmailData" type="account:UpdateCustomerEmailResponseData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="UpdateCustomerEmailResponseData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="gcif" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="updatedEmail" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns="https://example.bank.com/Commons" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="https://example.bank.com/Commons" version="1.0">
+            <xs:complexType name="requestHeader">
+                <xs:sequence>
+                    <xs:element form="unqualified" name="messageId" type="xs:string"/>
+                    <xs:element form="unqualified" name="channelId" type="xs:string"/>
+                    <xs:element form="unqualified" name="sequenceNumber" type="xs:string"/>
+                    <xs:element form="unqualified" name="transactionDate" type="xs:string"/>
+                    <xs:element form="unqualified" name="transactionTime" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="responseHeader">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="responseCode" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="errorOrigin" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="responseMessage" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="UpdateCustomerEmailRequest">
+        <wsdl:part element="tns:UpdateCustomerEmailRequest" name="UpdateCustomerEmailRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="UpdateCustomerEmailResponse">
+        <wsdl:part element="tns:UpdateCustomerEmailResponse" name="UpdateCustomerEmailResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="Account">
+        <wsdl:operation name="UpdateCustomerEmail">
+            <wsdl:input message="tns:UpdateCustomerEmailRequest" name="UpdateCustomerEmailRequest"> </wsdl:input>
+            <wsdl:output message="tns:UpdateCustomerEmailResponse" name="UpdateCustomerEmailResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="AccountSoap11" type="tns:Account">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="UpdateCustomerEmail">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="UpdateCustomerEmailRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="UpdateCustomerEmailResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="AccountService">
+        <wsdl:port binding="tns:AccountSoap11" name="AccountSoap11">
+            <soap:address location="http://localhost:9081/Account"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

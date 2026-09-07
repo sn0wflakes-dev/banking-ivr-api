@@ -1,3 +1,14 @@
+server:
+  port: ${PORT}
 spring:
+  main:
+    allow-bean-definition-overriding: true
   application:
     name: banking-ivr-api
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${DATABASE_USERNAME}
+    password: ${DATABASE_PASSWORD}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
