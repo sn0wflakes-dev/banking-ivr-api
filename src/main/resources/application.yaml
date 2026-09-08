@@ -1,10 +1,11 @@
 server:
   port: ${PORT}
 spring:
-  main:
-    allow-bean-definition-overriding: true
   application:
     name: banking-ivr-api
+  config:
+    import:
+    - optional:classpath:/config/soap.services.config.yml
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}
@@ -12,3 +13,6 @@ spring:
     driver-class-name: org.postgresql.Driver
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+logging:
+  level:
+    root: info
