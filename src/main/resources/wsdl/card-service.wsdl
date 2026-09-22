@@ -1,0 +1,177 @@
+<wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:sch0="https://example.bank.com/CardServices" xmlns:sch1="https://example.bank.com/Commons" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="https://example.bank.com/CardServices" targetNamespace="https://example.bank.com/CardServices">
+    <wsdl:types>
+        <xs:schema xmlns:card="https://example.bank.com/CardServices" xmlns:common="https://example.bank.com/Commons" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="https://example.bank.com/CardServices" version="1.0">
+            <xs:import namespace="https://example.bank.com/Commons"/>
+            <xs:element name="ActivateCardRequest" type="card:activateCardRequest"/>
+            <xs:element name="ActivateCardResponse" type="card:activateCardResponse"/>
+            <xs:element name="AuthCardRequest" type="card:authCardRequest"/>
+            <xs:element name="AuthCardResponse" type="card:authCardResponse"/>
+            <xs:element name="RegisterCardRequest" type="card:registerCardRequest"/>
+            <xs:element name="RegisterCardResponse" type="card:registerCardResponse"/>
+            <xs:complexType name="activateCardRequest">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="RequestHeader" type="common:requestHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="ActivateCardData" type="card:ActivateCardData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ActivateCardData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="cardNumber" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="activateCardResponse">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="ResponseHeader" type="common:responseHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="ActivateCardData" type="card:ActivateCardResponseData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ActivateCardResponseData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="cardNumber" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="status" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="authCardRequest">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="RequestHeader" type="common:requestHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="AuthCardData" type="card:AuthCardData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="AuthCardData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="cardNumber" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="pin" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="authCardResponse">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="ResponseHeader" type="common:responseHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="AuthCardData" type="card:AuthCardResponseData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="AuthCardResponseData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="customerNumber" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="address" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="cif" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="cardNumber" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="registerCardResponse">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="ResponseHeader" type="common:responseHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="RegisterCardData" type="card:RegisterCardResponseData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RegisterCardResponseData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="customerNumber" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="cif" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="cardNumber" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="expiryDate" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="status" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="registerCardRequest">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="RequestHeader" type="common:requestHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="RegisterCardData" type="card:RegisterCardData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RegisterCardData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="pin" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="customerNumber" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns="https://example.bank.com/Commons" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="https://example.bank.com/Commons" version="1.0">
+            <xs:complexType name="responseHeader">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="responseCode" type="xs:string"/>
+                    <xs:element form="unqualified" name="messageId" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="errorOrigin" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="responseMessage" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="requestHeader">
+                <xs:sequence>
+                    <xs:element form="unqualified" name="messageId" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="serviceId" type="xs:string"/>
+                    <xs:element form="unqualified" name="serviceType" type="xs:string"/>
+                    <xs:element form="unqualified" name="sequenceNumber" type="xs:string"/>
+                    <xs:element form="unqualified" name="transactionDate" type="xs:string"/>
+                    <xs:element form="unqualified" name="transactionTime" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="RegisterCardResponse">
+        <wsdl:part element="tns:RegisterCardResponse" name="RegisterCardResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="AuthCardRequest">
+        <wsdl:part element="tns:AuthCardRequest" name="AuthCardRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ActivateCardRequest">
+        <wsdl:part element="tns:ActivateCardRequest" name="ActivateCardRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="RegisterCardRequest">
+        <wsdl:part element="tns:RegisterCardRequest" name="RegisterCardRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ActivateCardResponse">
+        <wsdl:part element="tns:ActivateCardResponse" name="ActivateCardResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="AuthCardResponse">
+        <wsdl:part element="tns:AuthCardResponse" name="AuthCardResponse"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="Card">
+        <wsdl:operation name="RegisterCard">
+            <wsdl:input message="tns:RegisterCardRequest" name="RegisterCardRequest"> </wsdl:input>
+            <wsdl:output message="tns:RegisterCardResponse" name="RegisterCardResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AuthCard">
+            <wsdl:input message="tns:AuthCardRequest" name="AuthCardRequest"> </wsdl:input>
+            <wsdl:output message="tns:AuthCardResponse" name="AuthCardResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ActivateCard">
+            <wsdl:input message="tns:ActivateCardRequest" name="ActivateCardRequest"> </wsdl:input>
+            <wsdl:output message="tns:ActivateCardResponse" name="ActivateCardResponse"> </wsdl:output>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="CardSoap11" type="tns:Card">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="RegisterCard">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="RegisterCardRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="RegisterCardResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="AuthCard">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="AuthCardRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="AuthCardResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="ActivateCard">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="ActivateCardRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ActivateCardResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="CardService">
+        <wsdl:port binding="tns:CardSoap11" name="CardSoap11">
+            <soap:address location="http://100.104.81.41:9081/Card"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

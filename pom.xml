@@ -28,6 +28,7 @@
     </scm>
     <properties>
         <wsdl.account.service.path>${project.basedir}/src/main/resources/wsdl/account-service.wsdl</wsdl.account.service.path>
+        <wsdl.card.service.path>${project.basedir}/src/main/resources/wsdl/card-service.wsdl</wsdl.card.service.path>
         <java.version>21</java.version>
     </properties>
     <dependencies>
@@ -165,15 +166,32 @@
                 <version>4.0.5</version>
                 <executions>
                     <execution>
-                        <id>wsimport-wsdl</id>
+                        <id>wsimport-account-service</id>
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>wsimport</goal>
                         </goals>
                         <configuration>
                             <packageName>aji.intern.core.bank.account</packageName>
+                            <wsdlDirectory>${project.basedir}/src/main/resources/wsdl</wsdlDirectory>
                             <wsdlFiles>
-                                <wsdlFile>${wsdl.account.service.path}</wsdlFile>
+                                <wsdlFile>account-service.wsdl</wsdlFile>
+                            </wsdlFiles>
+                            <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
+                            <xnocompile>true</xnocompile>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>wsimport-card-service</id>
+                        <phase>generate-sources</phase>
+                        <goals>
+                            <goal>wsimport</goal>
+                        </goals>
+                        <configuration>
+                            <packageName>aji.intern.core.bank.card</packageName>
+                            <wsdlDirectory>${project.basedir}/src/main/resources/wsdl</wsdlDirectory>
+                            <wsdlFiles>
+                                <wsdlFile>card-service.wsdl</wsdlFile>
                             </wsdlFiles>
                             <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
                             <xnocompile>true</xnocompile>

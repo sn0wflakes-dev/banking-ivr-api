@@ -2,20 +2,12 @@
     <wsdl:types>
         <xs:schema xmlns:account="https://example.bank.com/AccountServices" xmlns:common="https://example.bank.com/Commons" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="https://example.bank.com/AccountServices" version="1.0">
             <xs:import namespace="https://example.bank.com/Commons"/>
+            <xs:element name="RegisterCustomerAccountRequest" type="account:registerCustomerAccountRequest"/>
+            <xs:element name="RegisterCustomerAccountResponse" type="account:registerCustomerAccountResponse"/>
             <xs:element name="UpdateCustomerEmailRequest" type="account:updateCustomerEmailRequest"/>
             <xs:element name="UpdateCustomerEmailResponse" type="account:updateCustomerEmailResponse"/>
-            <xs:complexType name="updateCustomerEmailRequest">
-                <xs:sequence>
-                    <xs:element form="unqualified" minOccurs="0" name="RequestHeader" type="common:requestHeader"/>
-                    <xs:element form="unqualified" minOccurs="0" name="UpdateCustomerEmailData" type="account:UpdateCustomerEmailRequestData"/>
-                </xs:sequence>
-            </xs:complexType>
-            <xs:complexType name="UpdateCustomerEmailRequestData">
-                <xs:sequence>
-                    <xs:element form="unqualified" minOccurs="0" name="gcif" type="xs:string"/>
-                    <xs:element form="unqualified" minOccurs="0" name="email" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
+            <xs:element name="UpdatePhoneNumberRequest" type="account:updatePhoneNumberRequest"/>
+            <xs:element name="UpdatePhoneNumberResponse" type="account:updatePhoneNumberResponse"/>
             <xs:complexType name="updateCustomerEmailResponse">
                 <xs:sequence>
                     <xs:element form="unqualified" minOccurs="0" name="ResponseHeader" type="common:responseHeader"/>
@@ -24,37 +16,127 @@
             </xs:complexType>
             <xs:complexType name="UpdateCustomerEmailResponseData">
                 <xs:sequence>
-                    <xs:element form="unqualified" minOccurs="0" name="gcif" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="cif" type="xs:string"/>
                     <xs:element form="unqualified" minOccurs="0" name="updatedEmail" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="registerCustomerAccountResponse">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="ResponseHeader" type="common:responseHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="RegisterCustomerAccountData" type="account:RegisterCustomerAccountResponseData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RegisterCustomerAccountResponseData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="customerNumber" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="birthDate" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="phoneNumber" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="email" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="address" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="cif" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updatePhoneNumberResponse">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="ResponseHeader" type="common:responseHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="UpdatePhoneNumberData" type="account:UpdatePhoneNumberResponseData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="UpdatePhoneNumberResponseData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="cif" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="updatedPhoneNumber" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="registerCustomerAccountRequest">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="RequestHeader" type="common:requestHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="RegisterCustomerAccountData" type="account:RegisterCustomerAccountData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="RegisterCustomerAccountData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="birthDate" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="phoneNumber" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="email" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="address" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updateCustomerEmailRequest">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="RequestHeader" type="common:requestHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="UpdateCustomerEmailData" type="account:UpdateCustomerEmailRequestData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="UpdateCustomerEmailRequestData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="cif" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="email" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="updatePhoneNumberRequest">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="RequestHeader" type="common:requestHeader"/>
+                    <xs:element form="unqualified" minOccurs="0" name="UpdatePhoneNumberData" type="account:UpdatePhoneNumberData"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="UpdatePhoneNumberData">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="cif" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="phoneNumber" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
         </xs:schema>
         <xs:schema xmlns="https://example.bank.com/Commons" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="https://example.bank.com/Commons" version="1.0">
+            <xs:complexType name="responseHeader">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="responseCode" type="xs:string"/>
+                    <xs:element form="unqualified" name="messageId" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="errorOrigin" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="responseMessage" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
             <xs:complexType name="requestHeader">
                 <xs:sequence>
                     <xs:element form="unqualified" name="messageId" type="xs:string"/>
-                    <xs:element form="unqualified" name="channelId" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="serviceId" type="xs:string"/>
+                    <xs:element form="unqualified" name="serviceType" type="xs:string"/>
                     <xs:element form="unqualified" name="sequenceNumber" type="xs:string"/>
                     <xs:element form="unqualified" name="transactionDate" type="xs:string"/>
                     <xs:element form="unqualified" name="transactionTime" type="xs:string"/>
                 </xs:sequence>
             </xs:complexType>
-            <xs:complexType name="responseHeader">
-                <xs:sequence>
-                    <xs:element form="unqualified" minOccurs="0" name="responseCode" type="xs:string"/>
-                    <xs:element form="unqualified" minOccurs="0" name="errorOrigin" type="xs:string"/>
-                    <xs:element form="unqualified" minOccurs="0" name="responseMessage" type="xs:string"/>
-                </xs:sequence>
-            </xs:complexType>
         </xs:schema>
     </wsdl:types>
+    <wsdl:message name="UpdatePhoneNumberRequest">
+        <wsdl:part element="tns:UpdatePhoneNumberRequest" name="UpdatePhoneNumberRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="RegisterCustomerAccountRequest">
+        <wsdl:part element="tns:RegisterCustomerAccountRequest" name="RegisterCustomerAccountRequest"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="RegisterCustomerAccountResponse">
+        <wsdl:part element="tns:RegisterCustomerAccountResponse" name="RegisterCustomerAccountResponse"> </wsdl:part>
+    </wsdl:message>
     <wsdl:message name="UpdateCustomerEmailRequest">
         <wsdl:part element="tns:UpdateCustomerEmailRequest" name="UpdateCustomerEmailRequest"> </wsdl:part>
     </wsdl:message>
     <wsdl:message name="UpdateCustomerEmailResponse">
         <wsdl:part element="tns:UpdateCustomerEmailResponse" name="UpdateCustomerEmailResponse"> </wsdl:part>
     </wsdl:message>
+    <wsdl:message name="UpdatePhoneNumberResponse">
+        <wsdl:part element="tns:UpdatePhoneNumberResponse" name="UpdatePhoneNumberResponse"> </wsdl:part>
+    </wsdl:message>
     <wsdl:portType name="Account">
+        <wsdl:operation name="UpdatePhoneNumber">
+            <wsdl:input message="tns:UpdatePhoneNumberRequest" name="UpdatePhoneNumberRequest"> </wsdl:input>
+            <wsdl:output message="tns:UpdatePhoneNumberResponse" name="UpdatePhoneNumberResponse"> </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RegisterCustomerAccount">
+            <wsdl:input message="tns:RegisterCustomerAccountRequest" name="RegisterCustomerAccountRequest"> </wsdl:input>
+            <wsdl:output message="tns:RegisterCustomerAccountResponse" name="RegisterCustomerAccountResponse"> </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="UpdateCustomerEmail">
             <wsdl:input message="tns:UpdateCustomerEmailRequest" name="UpdateCustomerEmailRequest"> </wsdl:input>
             <wsdl:output message="tns:UpdateCustomerEmailResponse" name="UpdateCustomerEmailResponse"> </wsdl:output>
@@ -62,6 +144,24 @@
     </wsdl:portType>
     <wsdl:binding name="AccountSoap11" type="tns:Account">
         <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="UpdatePhoneNumber">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="UpdatePhoneNumberRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="UpdatePhoneNumberResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="RegisterCustomerAccount">
+            <soap:operation soapAction=""/>
+            <wsdl:input name="RegisterCustomerAccountRequest">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="RegisterCustomerAccountResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
         <wsdl:operation name="UpdateCustomerEmail">
             <soap:operation soapAction=""/>
             <wsdl:input name="UpdateCustomerEmailRequest">
@@ -74,7 +174,7 @@
     </wsdl:binding>
     <wsdl:service name="AccountService">
         <wsdl:port binding="tns:AccountSoap11" name="AccountSoap11">
-            <soap:address location="http://localhost:9081/Account"/>
+            <soap:address location="http://100.104.81.41:9081/Account"/>
         </wsdl:port>
     </wsdl:service>
 </wsdl:definitions>

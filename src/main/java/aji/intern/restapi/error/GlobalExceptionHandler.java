@@ -75,7 +75,7 @@ public class GlobalExceptionHandler {
         log.error("Error while executing request. Reason : {}", ex.getResponseMessage());
 
         switch (ex.getResponseCode()) {
-            case "10":
+            case "04":
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(WebResponse.<String>builder()
                                 .header(WebResponse.ResponseHeader.builder()

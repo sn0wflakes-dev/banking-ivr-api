@@ -30,7 +30,7 @@ public class AccountServiceImpl implements AccountService {
         ObjectFactory factory = new ObjectFactory();
         RequestHeader requestHeader = factory.createRequestHeader();
         requestHeader.setMessageId(header.getMessageId());
-        requestHeader.setChannelId("IVR");
+        requestHeader.setServiceType("IVR");
         requestHeader.setSequenceNumber(SeqNumberUtil.getSeqNumber());
         requestHeader.setTransactionDate(header.getTransactionDate());
         requestHeader.setTransactionTime(header.getTransactionTime());
@@ -43,7 +43,7 @@ public class AccountServiceImpl implements AccountService {
             ObjectFactory objectFactory = new ObjectFactory();
             UpdateCustomerEmailRequestData updateEmailData = objectFactory.createUpdateCustomerEmailRequestData();
             updateEmailData.setEmail(request.getEmailAddress());
-            updateEmailData.setGcif(request.getCif());
+            updateEmailData.setCif(request.getCif());
 
             UpdateCustomerEmailRequest updateEmailReq = objectFactory.createUpdateCustomerEmailRequest();
             updateEmailReq.setUpdateCustomerEmailData(updateEmailData);
