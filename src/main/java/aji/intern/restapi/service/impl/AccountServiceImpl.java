@@ -53,7 +53,8 @@ public class AccountServiceImpl implements AccountService {
                     .accountService()
                     .updateCustomerEmail(updateEmailReq);
 
-            log.info("Customer email updated successfully, with cif={}", request.getCif());
+            log.info("Update email success: Customer email updated successfully, with cif={}",
+                    request.getCif());
 
             return toUpdateCustomerEmailRes(updateCustomerEmailResponse);
 

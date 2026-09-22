@@ -47,7 +47,7 @@ public class GlobalExceptionHandler {
          * */
         try {
             ThreadContext.put("violationList", objectMapper.writeValueAsString(violationList));
-            log.error("Failed to make request. Reason : Invalid request");
+            log.warn("Failed to make request. Reason : Invalid request");
         } finally {
             ThreadContext.remove("violationList");
         }
@@ -72,7 +72,7 @@ public class GlobalExceptionHandler {
             HttpServletRequest httpServletRequest) {
 
         String messageId = (String) httpServletRequest.getAttribute(MessageHeaderVal.MSG_ID.toString());
-        log.error("Error while executing request. Reason : {}", ex.getResponseMessage());
+        log.warn("Failed executing request. Reason : {}", ex.getResponseMessage());
 
         switch (ex.getResponseCode()) {
             case "04":
