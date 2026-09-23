@@ -54,10 +54,7 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                 .body(WebResponse.<String>builder()
-                        .header(WebResponse.ResponseHeader.builder()
-                                .requestId(messageId)
-                                .timestamp(OffsetDateTime.now().toString())
-                                .build())
+                        .header(responseHeader(messageId))
                         .error(WebResponse.ErrorMessage.builder()
                                 .responseCode("99")
                                 .errorOrigin("IVR-API")
@@ -78,10 +75,7 @@ public class GlobalExceptionHandler {
             case "04":
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(WebResponse.<String>builder()
-                                .header(WebResponse.ResponseHeader.builder()
-                                        .requestId(messageId)
-                                        .timestamp(OffsetDateTime.now().toString())
-                                        .build())
+                                .header(responseHeader(messageId))
                                 .error(WebResponse.ErrorMessage.builder()
                                         .responseCode(ex.getResponseCode())
                                         .errorOrigin(ex.getErrorOrigin())
@@ -91,10 +85,7 @@ public class GlobalExceptionHandler {
             default:
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                         .body(WebResponse.<String>builder()
-                                .header(WebResponse.ResponseHeader.builder()
-                                        .requestId(messageId)
-                                        .timestamp(OffsetDateTime.now().toString())
-                                        .build())
+                                .header(responseHeader(messageId))
                                 .error(WebResponse.ErrorMessage.builder()
                                         .responseCode(ex.getResponseCode())
                                         .errorOrigin(ex.getErrorOrigin())
@@ -113,16 +104,20 @@ public class GlobalExceptionHandler {
         log.error("Failed to make request. Reason : Internal server error, details : {}", ex.getMessage());
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                 .body(WebResponse.<String>builder()
-                        .header(WebResponse.ResponseHeader.builder()
-                                .requestId(messageId)
-                                .timestamp(OffsetDateTime.now().toString())
-                                .build())
+                        .header(responseHeader(messageId))
                         .error(WebResponse.ErrorMessage.builder()
                                 .responseCode("99")
                                 .errorOrigin("IVR-API")
                                 .message("500 Internal Server Error")
                                 .build())
                         .build());
+    }
+
+    private WebResponse.ResponseHeader responseHeader(String messageId) {
+        return WebResponse.ResponseHeader.builder()
+                .requestId(messageId)
+                .timestamp(OffsetDateTime.now().toString())
+                .build();
     }
 
 }
