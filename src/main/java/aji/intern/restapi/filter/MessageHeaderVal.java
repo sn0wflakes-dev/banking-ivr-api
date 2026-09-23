@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum MessageHeaderVal {
     MSG_ID("messageId"),
-    TTIME("transactionDate"),
-    TDATE("transactionTime");
+    TTIME("transactionTime"),
+    TDATE("transactionDate");
 
     private final String ctx;
 
