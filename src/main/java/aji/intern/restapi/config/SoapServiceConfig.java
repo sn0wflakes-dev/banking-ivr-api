@@ -2,6 +2,8 @@ package aji.intern.restapi.config;
 
 import aji.intern.core.bank.account.Account;
 import aji.intern.core.bank.account.AccountService;
+import aji.intern.core.bank.card.Card;
+import aji.intern.core.bank.card.CardService;
 import jakarta.xml.ws.BindingProvider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -25,6 +27,12 @@ public class SoapServiceConfig {
     @Value("${soap.services.account.endpoint}")
     private String accountServiceEndpoint;
 
+    @Value("${soap.services.card.path}")
+    private String cardServicePath;
+
+    @Value("${soap.services.card.endpoint}")
+    private String cardServiceEndpoint;
+
     @Value("${soap.timeout.request}")
     private Integer requestTimeout;
 
@@ -41,6 +49,25 @@ public class SoapServiceConfig {
 
             Map<String, Object> context = ((BindingProvider) port).getRequestContext();
             context.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, accountServiceEndpoint);
+            context.put("com.sun.xml.ws.connect.timeout", connectionTimeout * 1000);
+            context.put("com.sun.xml.ws.request.timeout", requestTimeout * 1000);
+
+            return port;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Bean
+    public Card cardService() {
+        try {
+            log.info("INITIALIZE CARD SERVICE SOAP");
+            URL wsdlLocation = Path.of(cardServicePath).toUri().toURL();
+            CardService service = new CardService(wsdlLocation);
+            Card port = service.getCardSoap11();
+
+            Map<String, Object> context = ((BindingProvider) port).getRequestContext();
+            context.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, cardServiceEndpoint);
             context.put("com.sun.xml.ws.connect.timeout", connectionTimeout * 1000);
             context.put("com.sun.xml.ws.request.timeout", requestTimeout * 1000);
 

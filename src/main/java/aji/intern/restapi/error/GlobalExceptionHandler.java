@@ -74,6 +74,16 @@ public class GlobalExceptionHandler {
         log.warn("Failed executing request. Reason : {}", ex.getResponseMessage());
 
         switch (ex.getResponseCode()) {
+            case "01":
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+                        .body(WebResponse.<String>builder()
+                                .header(responseHeader(messageId))
+                                .error(WebResponse.ErrorMessage.builder()
+                                        .responseCode(ex.getResponseCode())
+                                        .errorOrigin(ex.getErrorOrigin())
+                                        .message(ex.getResponseMessage())
+                                        .build())
+                                .build());
             case "04":
                 return ResponseEntity.status(HttpStatus.NOT_FOUND)
                         .body(WebResponse.<String>builder()

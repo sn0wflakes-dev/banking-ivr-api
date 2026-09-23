@@ -3,6 +3,9 @@ soap:
     account:
       path: ${ACCOUNT_SERVICE_PATH}
       endpoint: ${ACCOUNT_SERVICE_ENDPOINT}
+    card:
+      path: ${CARD_SERVICE_PATH}
+      endpoint: ${CARD_SERVICE_ENDPOINT}
   timeout:
     request: 50
     connection: 10
