@@ -12,12 +12,14 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class UpdateEmailRequest {
+public class UpdateAccountRequest {
     @NotBlank(message = "Customer Identification Folder field is required")
-    @Pattern(regexp = "^[a-zA-Z0-9]+$", message = "Customer Identification Folder must contains only letters and number")
+    @Pattern(regexp = "^[a-zA-Z0-9-]+$", message = "Customer Identification Folder must contains only letters and number")
     private String cif;
 
-    @NotBlank(message = "Email address field is required")
     @Email(message = "Invalid email format")
     private String emailAddress;
+
+    @Pattern(regexp = "^[0-9]{1,20}$", message = "Phone number must contain only numbers and be up to 20 digits long")
+    private String phoneNumber;
 }

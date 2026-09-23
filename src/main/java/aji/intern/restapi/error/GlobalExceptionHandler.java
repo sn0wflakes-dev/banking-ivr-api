@@ -61,6 +61,7 @@ public class GlobalExceptionHandler {
                                 .responseCode("99")
                                 .errorOrigin("IVR-API")
                                 .message("Validation Error")
+                                .detail(violationList)
                                 .build())
                         .build());
     }

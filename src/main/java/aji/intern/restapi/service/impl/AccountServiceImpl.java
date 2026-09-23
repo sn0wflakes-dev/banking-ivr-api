@@ -4,8 +4,8 @@ import aji.intern.core.bank.account.*;
 import aji.intern.restapi.config.SoapServiceConfig;
 import aji.intern.restapi.dto.MessageHeader;
 import aji.intern.restapi.dto.SoapFaultResponse;
-import aji.intern.restapi.dto.account.UpdateEmailRequest;
-import aji.intern.restapi.dto.account.UpdateEmailResponse;
+import aji.intern.restapi.dto.account.UpdateAccountRequest;
+import aji.intern.restapi.dto.account.UpdateAccountResponse;
 import aji.intern.restapi.error.exception.soap.AccountServiceException;
 import aji.intern.restapi.service.AccountService;
 import aji.intern.restapi.service.ValidationService;
@@ -40,42 +40,62 @@ public class AccountServiceImpl implements AccountService {
         return requestHeader;
     }
 
+    private UpdateAccountResponse toUpdateCustomerEmailRes(UpdateCustomerEmailResponse response) {
+        return UpdateAccountResponse.builder()
+                .updateEmail(response.getUpdateCustomerEmailData().getUpdatedEmail())
+                .build();
+    }
+
+    private UpdateAccountResponse toUpdateMobileNumberRes(UpdatePhoneNumberResponse response) {
+        return UpdateAccountResponse.builder()
+                .updatedPhoneNumber(response.getUpdatePhoneNumberData().getUpdatedPhoneNumber())
+                .build();
+    }
+
     @Override
-    public UpdateEmailResponse updateCustomerEmail(MessageHeader header, UpdateEmailRequest request) {
+    public UpdateAccountResponse updateAccount(MessageHeader header, UpdateAccountRequest request) {
         validationService.validate(request);
         try {
             ObjectFactory objectFactory = new ObjectFactory();
-            UpdateCustomerEmailRequestData updateEmailData = objectFactory.createUpdateCustomerEmailRequestData();
-            updateEmailData.setEmail(request.getEmailAddress());
-            updateEmailData.setCif(request.getCif());
 
-            UpdateCustomerEmailRequest updateEmailReq = objectFactory.createUpdateCustomerEmailRequest();
-            updateEmailReq.setUpdateCustomerEmailData(updateEmailData);
-            updateEmailReq.setRequestHeader(requestHeader(header));
+            if (request.getEmailAddress() != null) {
+                UpdateCustomerEmailRequestData updateEmailData = objectFactory.createUpdateCustomerEmailRequestData();
+                updateEmailData.setEmail(request.getEmailAddress());
+                updateEmailData.setCif(request.getCif());
 
-            UpdateCustomerEmailResponse updateCustomerEmailResponse = soapServiceConfig
-                    .accountService()
-                    .updateCustomerEmail(updateEmailReq);
+                UpdateCustomerEmailRequest updateEmailReq = objectFactory.createUpdateCustomerEmailRequest();
+                updateEmailReq.setUpdateCustomerEmailData(updateEmailData);
+                updateEmailReq.setRequestHeader(requestHeader(header));
 
-            log.info("Update email success: Customer email updated successfully, with cif={}",
+                UpdateCustomerEmailResponse updateCustomerEmailResponse = soapServiceConfig
+                        .accountService()
+                        .updateCustomerEmail(updateEmailReq);
+
+                log.info("Update email success: Customer email updated successfully, with cif={}",
+                        request.getCif());
+
+                return toUpdateCustomerEmailRes(updateCustomerEmailResponse);
+
+            }
+
+            UpdatePhoneNumberData data = objectFactory.createUpdatePhoneNumberData();
+            data.setCif(request.getCif());
+            data.setPhoneNumber(request.getPhoneNumber());
+            UpdatePhoneNumberRequest phoneNumberRequest = objectFactory.createUpdatePhoneNumberRequest();
+            phoneNumberRequest.setUpdatePhoneNumberData(data);
+            phoneNumberRequest.setRequestHeader(requestHeader(header));
+
+            UpdatePhoneNumberResponse response = soapServiceConfig.accountService().updatePhoneNumber(phoneNumberRequest);
+
+            log.info("Update phone number success: Customer phone number updated successfully, with cif={}",
                     request.getCif());
 
-            return toUpdateCustomerEmailRes(updateCustomerEmailResponse);
-
+            return toUpdateMobileNumberRes(response);
         } catch (SOAPFaultException e) {
             SoapFaultResponse fault = XmlParserUtil.xmlFaultParser(e.getFault().getDetail());
             throw new AccountServiceException(fault);
         } catch (Exception e) {
-            log.error("ERROR : {}", e.getMessage());
             throw new RuntimeException(e);
         }
-    }
-
-    private UpdateEmailResponse toUpdateCustomerEmailRes(UpdateCustomerEmailResponse response) {
-        return UpdateEmailResponse.builder()
-                .responseCode(response.getResponseHeader().getResponseCode())
-                .message(response.getResponseHeader().getResponseMessage())
-                .updateEmail(response.getUpdateCustomerEmailData().getUpdatedEmail())
-                .build();
     }
 }

@@ -1,10 +1,10 @@
 package aji.intern.restapi.service;
 
 import aji.intern.restapi.dto.MessageHeader;
-import aji.intern.restapi.dto.account.UpdateEmailRequest;
-import aji.intern.restapi.dto.account.UpdateEmailResponse;
+import aji.intern.restapi.dto.account.UpdateAccountRequest;
+import aji.intern.restapi.dto.account.UpdateAccountResponse;
 
 public interface AccountService {
-    UpdateEmailResponse updateCustomerEmail(MessageHeader header,
-                                            UpdateEmailRequest request);
+    UpdateAccountResponse updateAccount(MessageHeader header,
+                                        UpdateAccountRequest request);
 }
