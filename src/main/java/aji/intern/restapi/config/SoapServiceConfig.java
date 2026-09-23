@@ -32,18 +32,23 @@ public class SoapServiceConfig {
     private Integer connectionTimeout;
 
     @Bean
-    public Account accountService() throws MalformedURLException {
-        log.info("INITIALIZE ACCOUNT SERVICE SOAP");
-        URL wsdlLocation = Path.of(accountServicePath).toUri().toURL();
-        AccountService service = new AccountService(wsdlLocation);
-        Account port = service.getAccountSoap11();
+    public Account accountService() {
+        try {
+            log.info("INITIALIZE ACCOUNT SERVICE SOAP");
+            URL wsdlLocation = Path.of(accountServicePath).toUri().toURL();
+            AccountService service = new AccountService(wsdlLocation);
+            Account port = service.getAccountSoap11();
 
-        Map<String, Object> context = ((BindingProvider) port).getRequestContext();
-        context.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, accountServiceEndpoint);
-        context.put("com.sun.xml.ws.connect.timeout", connectionTimeout * 1000);
-        context.put("com.sun.xml.ws.request.timeout", requestTimeout * 1000);
+            Map<String, Object> context = ((BindingProvider) port).getRequestContext();
+            context.put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, accountServiceEndpoint);
+            context.put("com.sun.xml.ws.connect.timeout", connectionTimeout * 1000);
+            context.put("com.sun.xml.ws.request.timeout", requestTimeout * 1000);
 
-        return port;
+            return port;
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }
