@@ -1,6 +1,7 @@
 package aji.intern.restapi.config;
 
 import aji.intern.restapi.client.api.KeyClient;
+import aji.intern.restapi.client.api.OtpClient;
 import aji.intern.restapi.client.dto.ErrorResponse;
 import aji.intern.restapi.error.RestApiClientException;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,6 +47,9 @@ public class ApiClientConfig {
         return ClientHttpRequestFactoryBuilder.jdk().build(settings);
     }
 
+    /*
+    * TODO : refactor REST client
+    * */
     @Bean
     public KeyClient keyClient() {
         RestClient client = RestClient.builder()
@@ -64,5 +68,29 @@ public class ApiClientConfig {
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
 
         return factory.createClient(KeyClient.class);
+    }
+
+    @Bean
+    public OtpClient otpClient() {
+        RestClient client = client();
+        RestClientAdapter adapter = RestClientAdapter.create(client);
+        HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
+
+        return factory.createClient(OtpClient.class);
+    }
+
+    private RestClient client() {
+        return RestClient.builder()
+                .baseUrl(baseUrl)
+                .requestFactory(clientHttpRequestFactory())
+                .defaultStatusHandler(HttpStatusCode::isError, (request, response) -> {
+                    ErrorResponse errorResponse;
+                    try {
+                        errorResponse = objectMapper.readValue(response.getBody(), ErrorResponse.class);
+                    } catch (IOException e) {
+                        throw new RestClientException("Failed to parse error body");
+                    }
+                    throw new RestApiClientException(response.getStatusCode(), errorResponse);
+                }).build();
     }
 }
