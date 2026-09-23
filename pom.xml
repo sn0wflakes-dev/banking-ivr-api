@@ -11,8 +11,8 @@
     <groupId>aji.intern</groupId>
     <artifactId>rest-api</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>maybank-ivr-api</name>
-    <description>maybank-ivr-api</description>
+    <name>banking-ivr-api</name>
+    <description>banking-ivr-api</description>
     <url/>
     <licenses>
         <license/>
