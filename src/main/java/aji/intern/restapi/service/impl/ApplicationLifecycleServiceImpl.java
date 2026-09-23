@@ -38,7 +38,6 @@ public class ApplicationLifecycleServiceImpl implements ApplicationLifecycleServ
             String key = service.registerServiceKey();
             config.setServiceKey(key);
             log.info("Inject key success: service key successfully injected");
-            log.info("Captured Service Key : {}", config.getServiceKey());
         } catch (Exception e) {
             log.warn("Inject key failed: error while executing task, error detail : {}", e.getMessage());
             int exitCode = 1;
@@ -61,7 +60,6 @@ public class ApplicationLifecycleServiceImpl implements ApplicationLifecycleServ
             String key = service.rotateKey();
             config.setServiceKey(key);
             log.info("Rotate key success: service key successfully rotated");
-            log.info("Rotated Service Key : {}", config.getServiceKey());
         } catch (Exception e) {
             log.warn("Rotate key failed: error while executing task, error detail : {}", e.getMessage());
         }
