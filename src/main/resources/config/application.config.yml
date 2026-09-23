@@ -1,0 +1,4 @@
+application:
+  config:
+    service-id: ${SERVICE_ID}
+    service-key: ""

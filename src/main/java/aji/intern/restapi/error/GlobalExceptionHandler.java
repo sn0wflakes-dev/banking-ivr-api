@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestClientResponseException;
 import tools.jackson.databind.ObjectMapper;
 
 import java.time.OffsetDateTime;
@@ -93,6 +95,26 @@ public class GlobalExceptionHandler {
                                         .build())
                                 .build());
         }
+
+    }
+
+    @ExceptionHandler(RestApiClientException.class)
+    public ResponseEntity<WebResponse<String>> handleRestClientException(
+            RestApiClientException ex,
+            HttpServletRequest httpServletRequest) {
+
+        String messageId = (String) httpServletRequest.getAttribute(MessageHeaderVal.MSG_ID.toString());
+        log.warn("Failed executing request. Reason : {}", ex.getMessage());
+
+        return ResponseEntity.status(ex.getStatusCode())
+                .body(WebResponse.<String>builder()
+                        .header(responseHeader(messageId))
+                        .error(WebResponse.ErrorMessage.builder()
+                                .responseCode(ex.getErrorResponse().error().responseCode())
+                                .errorOrigin(ex.getErrorResponse().error().errorOrigin())
+                                .message(ex.getErrorResponse().error().message())
+                                .build())
+                        .build());
 
     }
 

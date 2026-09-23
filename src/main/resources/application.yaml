@@ -6,6 +6,8 @@ spring:
   config:
     import:
     - optional:classpath:/config/soap.services.config.yml
+    - optional:classpath:/config/rest.service.config.yml
+    - optional:classpath:/config/application.config.yml
   datasource:
     url: ${DATABASE_URL}
     username: ${DATABASE_USERNAME}

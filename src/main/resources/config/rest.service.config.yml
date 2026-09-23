@@ -1,0 +1,6 @@
+rest:
+  services:
+    base-url: ${REST_API_BASE_URL}
+  timeout:
+    request: 50
+    connection: 10
