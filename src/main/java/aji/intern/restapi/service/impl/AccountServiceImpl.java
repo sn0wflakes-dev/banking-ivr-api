@@ -8,6 +8,7 @@ import aji.intern.restapi.dto.account.UpdateEmailRequest;
 import aji.intern.restapi.dto.account.UpdateEmailResponse;
 import aji.intern.restapi.error.exception.soap.AccountServiceException;
 import aji.intern.restapi.service.AccountService;
+import aji.intern.restapi.service.ValidationService;
 import aji.intern.restapi.utils.SeqNumberUtil;
 import aji.intern.restapi.utils.XmlParserUtil;
 import jakarta.xml.ws.soap.SOAPFaultException;
@@ -21,9 +22,11 @@ public class AccountServiceImpl implements AccountService {
     private static final Logger log = LogManager.getLogger(AccountServiceImpl.class);
 
     private final SoapServiceConfig soapServiceConfig;
+    private final ValidationService validationService;
 
-    public AccountServiceImpl(SoapServiceConfig soapServiceConfig) {
+    public AccountServiceImpl(SoapServiceConfig soapServiceConfig, ValidationService validationService) {
         this.soapServiceConfig = soapServiceConfig;
+        this.validationService = validationService;
     }
 
     private RequestHeader requestHeader(MessageHeader header) {
@@ -39,6 +42,7 @@ public class AccountServiceImpl implements AccountService {
 
     @Override
     public UpdateEmailResponse updateCustomerEmail(MessageHeader header, UpdateEmailRequest request) {
+        validationService.validate(request);
         try {
             ObjectFactory objectFactory = new ObjectFactory();
             UpdateCustomerEmailRequestData updateEmailData = objectFactory.createUpdateCustomerEmailRequestData();
