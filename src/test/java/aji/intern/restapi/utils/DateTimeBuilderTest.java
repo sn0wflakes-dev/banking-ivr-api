@@ -1,5 +1,6 @@
 package aji.intern.restapi.utils;
 
+import aji.intern.restapi.helper.DateTimeBuilder;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,16 +10,16 @@ import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 
-public class DateTimeUtilTest {
+public class DateTimeBuilderTest {
 
     @Test
     void shouldGiveDateTimeValue() {
         // Arrange
-        DateTimeUtil dateTimeUtil = new DateTimeUtil();
+        DateTimeBuilder dateTimeBuilder = new DateTimeBuilder();
 
         // Test
-        Assertions.assertNotNull(dateTimeUtil.getTransactionDate());
-        Assertions.assertNotNull(dateTimeUtil.getTransactionTime());
+        Assertions.assertNotNull(dateTimeBuilder.getTransactionDate());
+        Assertions.assertNotNull(dateTimeBuilder.getTransactionTime());
     }
 
     @Test
@@ -29,10 +30,10 @@ public class DateTimeUtilTest {
                 .withZone(ZoneId.of("Asia/Jakarta"))
                 .withResolverStyle(ResolverStyle.STRICT);
 
-        DateTimeUtil dateTimeUtil = new DateTimeUtil();
+        DateTimeBuilder dateTimeBuilder = new DateTimeBuilder();
 
         Assertions.assertDoesNotThrow(() -> {
-                LocalDate.parse(dateTimeUtil.getTransactionDate(), formatter);
+                LocalDate.parse(dateTimeBuilder.getTransactionDate(), formatter);
         });
     }
 
@@ -44,10 +45,10 @@ public class DateTimeUtilTest {
                 .withZone(ZoneId.of("Asia/Jakarta"))
                 .withResolverStyle(ResolverStyle.STRICT);
 
-        DateTimeUtil dateTimeUtil = new DateTimeUtil();
+        DateTimeBuilder dateTimeBuilder = new DateTimeBuilder();
 
         Assertions.assertDoesNotThrow(() -> {
-            LocalTime.parse(dateTimeUtil.getTransactionTime(), formatter);
+            LocalTime.parse(dateTimeBuilder.getTransactionTime(), formatter);
         });
     }
 

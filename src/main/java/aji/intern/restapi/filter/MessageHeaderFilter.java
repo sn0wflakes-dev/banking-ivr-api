@@ -1,6 +1,6 @@
 package aji.intern.restapi.filter;
 
-import aji.intern.restapi.utils.DateTimeUtil;
+import aji.intern.restapi.helper.DateTimeBuilder;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -23,7 +23,7 @@ public class MessageHeaderFilter extends OncePerRequestFilter {
 
         request.setAttribute(MessageHeaderVal.MSG_ID.toString(), UUID.randomUUID().toString());
 
-        DateTimeUtil date = new DateTimeUtil();
+        DateTimeBuilder date = new DateTimeBuilder();
         request.setAttribute(MessageHeaderVal.TDATE.toString(), date.getTransactionDate());
         request.setAttribute(MessageHeaderVal.TTIME.toString(), date.getTransactionTime());
 

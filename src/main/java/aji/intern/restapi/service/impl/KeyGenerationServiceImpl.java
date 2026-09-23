@@ -6,7 +6,7 @@ import aji.intern.restapi.client.dto.RequestHeader;
 import aji.intern.restapi.client.dto.key.*;
 import aji.intern.restapi.config.ApplicationConfig;
 import aji.intern.restapi.service.KeyGenerationService;
-import aji.intern.restapi.utils.DateTimeUtil;
+import aji.intern.restapi.helper.DateTimeBuilder;
 import aji.intern.restapi.utils.SeqNumberUtil;
 import com.github.f4b6a3.uuid.UuidCreator;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +24,14 @@ public class KeyGenerationServiceImpl implements KeyGenerationService {
     }
 
     private RequestHeader requestHeader() {
-        DateTimeUtil dateTimeUtil = new DateTimeUtil();
+        DateTimeBuilder dateTimeBuilder = new DateTimeBuilder();
         return RequestHeader.builder()
                 .messageId(UuidCreator.getTimeOrderedEpoch().toString())
                 .serviceId(config.getServiceId())
                 .serviceType("IVR")
                 .sequenceNumber(SeqNumberUtil.getSeqNumber())
-                .transactionDate(dateTimeUtil.getTransactionDate())
-                .transactionTime(dateTimeUtil.getTransactionTime())
+                .transactionDate(dateTimeBuilder.getTransactionDate())
+                .transactionTime(dateTimeBuilder.getTransactionTime())
                 .build();
     }
 
