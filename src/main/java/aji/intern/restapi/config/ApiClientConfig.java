@@ -46,24 +46,10 @@ public class ApiClientConfig {
 
         return ClientHttpRequestFactoryBuilder.jdk().build(settings);
     }
-
-    /*
-    * TODO : refactor REST client
-    * */
+    
     @Bean
     public KeyClient keyClient() {
-        RestClient client = RestClient.builder()
-                .baseUrl(baseUrl)
-                .requestFactory(clientHttpRequestFactory())
-                .defaultStatusHandler(HttpStatusCode::isError, (request, response) -> {
-                    ErrorResponse errorResponse;
-                    try {
-                        errorResponse = objectMapper.readValue(response.getBody(), ErrorResponse.class);
-                    } catch (IOException e) {
-                        throw new RestClientException("Failed to parse error body");
-                    }
-                    throw new RestApiClientException(response.getStatusCode(), errorResponse);
-        }).build();
+        RestClient client = client();
         RestClientAdapter adapter = RestClientAdapter.create(client);
         HttpServiceProxyFactory factory = HttpServiceProxyFactory.builderFor(adapter).build();
 
