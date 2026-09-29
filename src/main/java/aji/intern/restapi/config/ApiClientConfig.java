@@ -46,7 +46,7 @@ public class ApiClientConfig {
 
         return ClientHttpRequestFactoryBuilder.jdk().build(settings);
     }
-    
+
     @Bean
     public KeyClient keyClient() {
         RestClient client = client();
